@@ -1,26 +1,27 @@
 package com.example.biblioteca.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.biblioteca.data.local.entity.AuthorEntity
 import kotlinx.coroutines.flow.Flow
-import retrofit2.http.DELETE
 
 @Dao
-interface AuthorDao{
+interface AuthorDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAuthor(author: AuthorEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAuthors(author: List<AuthorEntity>)
+    suspend fun insertAuthors(authors: List<AuthorEntity>)
 
     @Update
     suspend fun updateAuthor(author: AuthorEntity)
 
-    @DELETE
+    @Delete
     suspend fun deleteAuthor(author: AuthorEntity)
 
     @Query("SELECT * FROM authors WHERE id = :authorId")
@@ -29,18 +30,18 @@ interface AuthorDao{
     ): AuthorEntity?
 
     @Query("SELECT * FROM authors WHERE id = :authorId")
-    suspend fun observeAuthorById(
+    fun observeAuthorById(
         authorId: String
-    ): List<AuthorEntity?>
+    ): Flow<AuthorEntity?>
 
     @Query("SELECT * FROM authors ORDER BY name ASC")
-    suspend fun observeAllAuthors(): Flow<List<AuthorEntity>>
+    fun observeAllAuthors(): Flow<List<AuthorEntity>>
 
     @Query(
         """
-            SELECT * FROM authors
-            WHERE name LIKE '%' || :query || '%'
-            ORDER BY name ASC
+        SELECT * FROM authors
+        WHERE name LIKE '%' || :query || '%'
+        ORDER BY name ASC
         """
     )
     fun searchAuthors(
@@ -49,5 +50,4 @@ interface AuthorDao{
 
     @Query("DELETE FROM authors")
     suspend fun deleteAllAuthors()
-
 }

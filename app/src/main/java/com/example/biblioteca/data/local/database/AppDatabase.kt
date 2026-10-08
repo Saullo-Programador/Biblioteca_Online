@@ -15,7 +15,7 @@ import com.example.biblioteca.data.local.entity.BookEntity
         AuthorEntity::class
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(RoomConverters::class)
 abstract class AppDatabase : RoomDatabase() {

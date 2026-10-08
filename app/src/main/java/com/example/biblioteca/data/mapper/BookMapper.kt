@@ -57,6 +57,23 @@ fun BookEntity.toDomain(): Book{
     )
 }
 
+fun Book.toEntity(
+    status: ReadingStatus = ReadingStatus.WANT_TO_READ
+): BookEntity {
+    return BookEntity(
+        id = id,
+        title = title,
+        authors = authors,
+        coverId = coverId,
+        firstPublishYear = firstPublishYear,
+        isbn = isbn,
+        publisher = publisher,
+        numberOfPages = numberOfPages,
+        subjects = subjects,
+        status = status
+    )
+}
+
 fun BookDetailsDto.toDomain(): BookDetails{
     return BookDetails(
         id = key
@@ -71,7 +88,7 @@ fun BookDetailsDto.toDomain(): BookDetails{
             .orEmpty()
             .mapNotNull { reference ->
                 reference.author?.key
-                    ?.removePrefix("/works/")
+                    ?.removePrefix("/authors/")
             }
     )
 }

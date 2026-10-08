@@ -11,6 +11,7 @@ data class BookDetailsDto (
     @SerialName("title")
     val title: String? = null,
 
+    @Serializable(with = DescriptionSerializer::class)
     @SerialName("description")
     val description: String? = null,
 
