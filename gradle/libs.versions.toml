@@ -1,6 +1,7 @@
 [versions]
 agp = "9.3.3"
 kotlin = "2.2.10"
+kotlinxCoroutinesTest = "1.11.0"
 ksp = "2.2.10-2.0.2"
 composeBom = "2026.02.01"
 
@@ -89,6 +90,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 # Retrofit / OkHttp
 # =========================
 
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
