@@ -1,4 +1,15 @@
 package com.example.biblioteca.domain.usecase
 
-class SaveBookUseCase {
+import com.example.biblioteca.domain.model.Book
+import com.example.biblioteca.domain.repository.BookRepository
+import javax.inject.Inject
+
+class SaveBookUseCase @Inject constructor(
+    private val repository: BookRepository
+) {
+    suspend operator fun invoke(
+        book: Book
+    ){
+        repository.saveBook(book)
+    }
 }
