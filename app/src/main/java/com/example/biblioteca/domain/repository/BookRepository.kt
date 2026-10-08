@@ -28,7 +28,7 @@ interface BookRepository {
         bookId: String
     ): Book?
 
-    fun observeSavedBook(): Flow<List<Book>>
+    fun observeSavedBooks(): Flow<List<Book>>
 
     fun observeBooksByStatus(
         status: ReadingStatus
