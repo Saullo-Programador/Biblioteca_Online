@@ -108,7 +108,7 @@ class BookRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun searchSaveBooks(query: String): Flow<List<LibraryBook>> {
+    override fun searchSavedBooks(query: String): Flow<List<LibraryBook>> {
         return bookDao
             .searchSavedBooks(query)
             .map { books ->

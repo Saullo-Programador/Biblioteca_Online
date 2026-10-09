@@ -114,6 +114,10 @@ class FakeBookRepository : BookRepository {
     ) {
         lastUpdatedBookId = bookId
         lastUpdatedPage = currentPage
+
+        updateSavedBook(bookId) {
+            it.copy(currentPage = currentPage)
+        }
     }
 
     override suspend fun updateReadingStatus(
@@ -122,6 +126,10 @@ class FakeBookRepository : BookRepository {
     ) {
         lastUpdatedBookId = bookId
         lastUpdatedStatus = status
+
+        updateSavedBook(bookId) {
+            it.copy(status = status)
+        }
     }
 
     override suspend fun updateRating(
@@ -130,6 +138,10 @@ class FakeBookRepository : BookRepository {
     ) {
         lastUpdatedBookId = bookId
         lastUpdatedRating = rating
+
+        updateSavedBook(bookId) {
+            it.copy(rating = rating)
+        }
     }
 
     override suspend fun updateNotes(
@@ -138,5 +150,30 @@ class FakeBookRepository : BookRepository {
     ) {
         lastUpdatedBookId = bookId
         lastUpdatedNotes = notes
+
+        updateSavedBook(bookId) {
+            it.copy(notes = notes)
+        }
+    }
+
+
+    private fun updateSavedBook(
+        bookId: String,
+        transform: (LibraryBook) -> LibraryBook
+    ) {
+        books.value = books.value.map { libraryBook ->
+            if (libraryBook.book.id == bookId) {
+                transform(libraryBook)
+            } else {
+                libraryBook
+            }
+        }
+    }
+
+
+    fun addLibraryBook(libraryBook: LibraryBook) {
+        books.value = books.value
+            .filterNot { it.book.id == libraryBook.book.id } +
+                libraryBook
     }
 }
