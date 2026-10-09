@@ -1,6 +1,5 @@
 package com.example.biblioteca.domain.usecase
 
-import com.example.biblioteca.domain.model.Book
 import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.repository.BookRepository
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +14,7 @@ class SearchSavedBooksUseCase @Inject constructor(
         if (query.isBlank()){
             return repository.observeSavedBooks()
         }
-        return repository.searchSaveBooks(
+        return repository.searchSavedBooks(
             query.trim()
         )
     }
