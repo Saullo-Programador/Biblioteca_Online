@@ -28,7 +28,7 @@ interface BookDao {
     fun observeBookById(bookId: String): Flow<BookEntity?>
 
     @Query("SELECT * FROM books WHERE id = :bookId")
-    suspend fun getBookById(bookId: String): BookEntity
+    suspend fun getBookById(bookId: String): BookEntity?
 
     @Query("SELECT * FROM books ORDER BY savedAt DESC")
     fun observeAllBooks(): Flow<List<BookEntity>>
