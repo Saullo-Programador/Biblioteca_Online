@@ -2,6 +2,7 @@ package com.example.biblioteca.fake
 
 import com.example.biblioteca.domain.model.Book
 import com.example.biblioteca.domain.model.BookDetails
+import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.model.ReadingStatus
 import com.example.biblioteca.domain.repository.BookRepository
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ import kotlinx.coroutines.flow.map
 
 class FakeBookRepository : BookRepository {
 
-    private val books = MutableStateFlow<List<Book>>(emptyList())
+    private val books = MutableStateFlow<List<LibraryBook>>(emptyList())
 
     var searchResult: Result<List<Book>> =
         Result.success(emptyList())
@@ -49,50 +50,55 @@ class FakeBookRepository : BookRepository {
     override suspend fun saveBook(book: Book) {
         lastSavedBook = book
 
+        val existinBook = books.value.firstOrNull{
+            it.book.id == book.id
+        }
+
+        val libraryBook = if (existinBook != null) {
+            existinBook.copy(book = book)
+        }else{
+            LibraryBook(book)
+        }
+
         books.value = books.value
-            .filterNot { it.id == book.id } + book
+            .filterNot { it.book.id == book.id } + libraryBook
     }
 
     override suspend fun removeBook(bookId: String) {
         lastRemovedBookId = bookId
 
         books.value = books.value
-            .filterNot { it.id == bookId }
+            .filterNot { it.book.id == bookId }
     }
 
     override suspend fun getSavedBook(
         bookId: String
-    ): Book? {
+    ): LibraryBook? {
         return books.value.firstOrNull {
-            it.id == bookId
+            it.book.id == bookId
         }
     }
 
-    override fun observeSavedBooks(): Flow<List<Book>> {
+    override fun observeSavedBooks(): Flow<List<LibraryBook>> {
         return books
     }
 
     override fun observeBooksByStatus(
         status: ReadingStatus
-    ): Flow<List<Book>> {
+    ): Flow<List<LibraryBook>> {
         return books.map { bookList ->
-            bookList.filter {
-                // O domínio Book atualmente não possui status.
-                // Por isso, este Fake será ajustado quando
-                // o modelo de domínio receber essa informação.
-                true
-            }
+            bookList.filter { it.status == status}
         }
     }
 
-    override fun searchSaveBooks(query: String): Flow<List<Book>> {
+    override fun searchSavedBooks(query: String): Flow<List<LibraryBook>> {
         return books.map { bookList ->
             bookList.filter { book ->
-                book.title.contains(
+                book.book.title.contains(
                     query,
                     ignoreCase = true
                 ) ||
-                        book.authors.any {
+                        book.book.authors.any {
                             it.contains(
                                 query,
                                 ignoreCase = true

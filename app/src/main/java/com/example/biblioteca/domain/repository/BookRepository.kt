@@ -35,7 +35,7 @@ interface BookRepository {
         status: ReadingStatus
     ): Flow<List<LibraryBook>>
 
-    fun searchSaveBooks(
+    fun searchSavedBooks(
         query: String
     ): Flow<List<LibraryBook>>
 
