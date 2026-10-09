@@ -1,6 +1,7 @@
 package com.example.biblioteca.domain.usecase
 
 import com.example.biblioteca.domain.model.Book
+import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.repository.BookRepository
 import javax.inject.Inject
 
@@ -9,7 +10,7 @@ class GetSavedBookUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         bookId: String
-    ): Book? {
+    ): LibraryBook? {
 
         if(bookId.isBlank()){
             return null

@@ -2,6 +2,7 @@ package com.example.biblioteca.domain.repository
 
 import com.example.biblioteca.domain.model.Book
 import com.example.biblioteca.domain.model.BookDetails
+import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.model.ReadingStatus
 import kotlinx.coroutines.flow.Flow
 
@@ -26,17 +27,17 @@ interface BookRepository {
 
     suspend fun getSavedBook(
         bookId: String
-    ): Book?
+    ): LibraryBook?
 
-    fun observeSavedBooks(): Flow<List<Book>>
+    fun observeSavedBooks(): Flow<List<LibraryBook>>
 
     fun observeBooksByStatus(
         status: ReadingStatus
-    ): Flow<List<Book>>
+    ): Flow<List<LibraryBook>>
 
     fun searchSaveBooks(
         query: String
-    ): Flow<List<Book>>
+    ): Flow<List<LibraryBook>>
 
     suspend fun updateReadingProgress(
         bookId: String,

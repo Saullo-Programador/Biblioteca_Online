@@ -1,6 +1,7 @@
 package com.example.biblioteca.domain.usecase
 
 import com.example.biblioteca.domain.model.Book
+import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.model.ReadingStatus
 import com.example.biblioteca.domain.repository.BookRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,7 @@ class GetBooksByStatusUseCase @Inject constructor(
 ) {
     operator fun invoke(
         status: ReadingStatus
-    ): Flow<List<Book>>{
+    ): Flow<List<LibraryBook>>{
         return repository.observeBooksByStatus(status)
     }
 }

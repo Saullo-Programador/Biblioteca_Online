@@ -3,9 +3,11 @@ package com.example.biblioteca.data.repository
 import com.example.biblioteca.data.local.dao.BookDao
 import com.example.biblioteca.data.mapper.toDomain
 import com.example.biblioteca.data.mapper.toEntity
+import com.example.biblioteca.data.mapper.toLibraryBook
 import com.example.biblioteca.data.remote.api.OpenLibraryApi
 import com.example.biblioteca.domain.model.Book
 import com.example.biblioteca.domain.model.BookDetails
+import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.model.ReadingStatus
 import com.example.biblioteca.domain.repository.BookRepository
 import kotlinx.coroutines.flow.Flow
@@ -84,33 +86,33 @@ class BookRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getSavedBook(bookId: String): Book? {
+    override suspend fun getSavedBook(bookId: String): LibraryBook? {
         return bookDao
             .getBookById(bookId)
-            ?.toDomain()
+            ?.toLibraryBook()
     }
 
-    override fun observeSavedBook(): Flow<List<Book>> {
+    override fun observeSavedBooks(): Flow<List<LibraryBook>> {
         return bookDao
             .observeAllBooks()
             .map { books ->
-                books.map { it.toDomain() }
+                books.map { it.toLibraryBook() }
             }
     }
 
-    override fun observeBooksByStatus(status: ReadingStatus): Flow<List<Book>> {
+    override fun observeBooksByStatus(status: ReadingStatus): Flow<List<LibraryBook>> {
         return bookDao
             .observeBooksByStatus(status)
             .map { books ->
-                books.map { it.toDomain() }
+                books.map { it.toLibraryBook() }
             }
     }
 
-    override fun searchSaveBooks(query: String): Flow<List<Book>> {
+    override fun searchSaveBooks(query: String): Flow<List<LibraryBook>> {
         return bookDao
             .searchSavedBooks(query)
             .map { books ->
-                books.map { it.toDomain() }
+                books.map { it.toLibraryBook() }
             }
     }
 
