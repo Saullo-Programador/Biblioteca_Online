@@ -7,7 +7,7 @@ import org.junit.Test
 
 class RemoveBookUseCaseTest {
     @Test
-    fun `deve retornar livro pelo id` () = runTest {
+    fun `deve remover livro pelo id` () = runTest {
         //Given
         val repository = FakeBookRepository()
 

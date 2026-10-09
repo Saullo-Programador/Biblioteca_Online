@@ -10,8 +10,7 @@ class RemoveBookUseCase @Inject constructor(
     suspend operator fun invoke(
         bookId: String
     ){
-        if (bookId.isBlank()){
-            repository.removeBook(bookId)
-        }
+        if (bookId.isBlank()) return
+        repository.removeBook(bookId)
     }
 }
