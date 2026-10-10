@@ -41,3 +41,14 @@ fun AuthorEntity.toDomain(): Author {
         photoId = photoId
     )
 }
+
+fun Author.toEntity(): AuthorEntity {
+    return AuthorEntity(
+        id = id,
+        name = name,
+        birthDate = birthDate,
+        deathDate = deathDate,
+        bio = bio,
+        photoId = photoId
+    )
+}
