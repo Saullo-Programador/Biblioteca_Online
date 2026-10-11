@@ -49,7 +49,7 @@ class GetSavedBookUseCaseTest {
     }
 
     @Test
-    fun `deve retornar null quando o livro noo estiver salvo` () = runTest {
+    fun `deve retornar null quando o livro nao estiver salvo` () = runTest {
         //Given
         val repository = FakeBookRepository()
         val useCase = GetSavedBookUseCase(repository)
