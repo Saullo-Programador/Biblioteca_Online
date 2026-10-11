@@ -1,6 +1,7 @@
 package com.example.biblioteca.domain.usecase
 
 import com.example.biblioteca.domain.model.Book
+import com.example.biblioteca.domain.usecase.book.SearchBooksUseCase
 import com.example.biblioteca.fake.FakeBookRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert

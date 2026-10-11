@@ -3,6 +3,7 @@ package com.example.biblioteca.domain.usecase
 import com.example.biblioteca.domain.model.Book
 import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.model.ReadingStatus
+import com.example.biblioteca.domain.usecase.book.SearchSavedBooksUseCase
 import com.example.biblioteca.fake.FakeBookRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

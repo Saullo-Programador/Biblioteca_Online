@@ -1,23 +1,21 @@
-package com.example.biblioteca.domain.usecase
+package com.example.biblioteca.domain.usecase.book
 
+import com.example.biblioteca.domain.model.ReadingStatus
 import com.example.biblioteca.domain.repository.BookRepository
 import javax.inject.Inject
 
-class UpdateReadingProgressUseCase @Inject constructor(
+class UpdateReadingStatusUseCase @Inject constructor(
     private val repository: BookRepository
 ) {
     suspend operator fun invoke(
         bookId: String,
-        currentPage: Int
+        status: ReadingStatus
     ){
         if (bookId.isBlank()) return
 
-        if (currentPage < 0) return
-
-        repository.updateReadingProgress(
+        repository.updateReadingStatus(
             bookId = bookId,
-            currentPage = currentPage
+            status = status
         )
-
     }
 }

@@ -1,4 +1,4 @@
-package com.example.biblioteca.domain.usecase
+package com.example.biblioteca.domain.usecase.author
 
 import com.example.biblioteca.domain.repository.AuthorRepository
 import javax.inject.Inject

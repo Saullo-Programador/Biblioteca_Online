@@ -1,6 +1,5 @@
-package com.example.biblioteca.domain.usecase
+package com.example.biblioteca.domain.usecase.book
 
-import com.example.biblioteca.domain.model.Book
 import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.repository.BookRepository
 import javax.inject.Inject

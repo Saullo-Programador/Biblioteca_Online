@@ -1,4 +1,4 @@
-package com.example.biblioteca.domain.usecase
+package com.example.biblioteca.domain.usecase.book
 
 import com.example.biblioteca.domain.model.BookDetails
 import com.example.biblioteca.domain.repository.BookRepository
