@@ -1,20 +1,19 @@
-package com.example.biblioteca.domain.usecase
+package com.example.biblioteca.domain.usecase.book
 
 import com.example.biblioteca.domain.model.Book
 import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.model.ReadingStatus
-import com.example.biblioteca.domain.usecase.book.GetSavedBooksUseCase
 import com.example.biblioteca.fake.FakeBookRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
-class GetSavedBooksUseCaseTest {
+class GetBooksByStatusUseCaseTest {
 
     @Test
-    fun `deve retornar todos os livros salvos`() = runTest {
-        // Given
+    fun `deve retornar os livros com o mesmo status` () = runTest {
+        //Given
         val book1 = Book(
             id = "OL123W",
             title = "Harry Potter",
@@ -62,29 +61,53 @@ class GetSavedBooksUseCaseTest {
         )
 
         val repository = FakeBookRepository()
-
         repository.addLibraryBook(libraryBook1)
         repository.addLibraryBook(libraryBook2)
 
-        val useCase = GetSavedBooksUseCase(repository)
+        val useCase = GetBooksByStatusUseCase(repository)
 
         //When
-        val result = useCase().first()
+        val result = useCase(ReadingStatus.WANT_TO_READ).first()
 
         //Then
-        Assert.assertEquals(2,result.size)
-        Assert.assertTrue(result.contains(libraryBook1))
-        Assert.assertTrue(result.contains(libraryBook2))
+        Assert.assertEquals(1, result.size)
+        Assert.assertEquals(libraryBook2, result.first())
+        Assert.assertTrue( result.all { it.status == ReadingStatus.WANT_TO_READ } )
     }
 
     @Test
-    fun `deve retornar lista vazia quando nao houver livros salvos` () = runTest {
+    fun `deve retornar lista vazia quando nenhum livro possuir o status` () = runTest {
         //Given
+        val book = Book(
+            id = "OL123W",
+            title = "Harry Potter",
+            authors = listOf("J. K. Rowling"),
+            coverId = 123,
+            firstPublishYear = 1997,
+            isbn = "9780747532743",
+            publisher = "Bloomsbury",
+            numberOfPages = 320,
+            subjects = listOf("Fantasy")
+        )
+
+        val libraryBook = LibraryBook(
+            book = book,
+            status = ReadingStatus.WANT_TO_READ,
+            currentPage = 0,
+            rating = null,
+            notes = null,
+            startedAt = null,
+            finishedAt = null,
+            savedAt = 1_758_000_000_000L
+        )
+
         val repository = FakeBookRepository()
-        val useCase = GetSavedBooksUseCase(repository)
+        repository.addLibraryBook(libraryBook)
+
+        val useCase = GetBooksByStatusUseCase(repository)
 
         //When
-        val result = useCase().first()
+        val result = useCase(ReadingStatus.COMPLETED).first()
 
         //Then
         Assert.assertTrue(result.isEmpty())

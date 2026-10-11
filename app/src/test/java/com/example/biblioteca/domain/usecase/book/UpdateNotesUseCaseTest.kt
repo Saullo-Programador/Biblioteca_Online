@@ -1,50 +1,49 @@
-package com.example.biblioteca.domain.usecase
+package com.example.biblioteca.domain.usecase.book
 
-import com.example.biblioteca.domain.usecase.book.UpdateRatingUseCase
 import com.example.biblioteca.fake.FakeBookRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
-class UpdateRatingUseCaseTest {
+class UpdateNotesUseCaseTest {
 
     @Test
-    fun `deve atualizar avaliacao do livro`() = runTest {
+    fun `deve salvar anotacao do livro`() = runTest {
 
         // Given
         val repository = FakeBookRepository()
-        val useCase = UpdateRatingUseCase(repository)
+        val useCase = UpdateNotesUseCase(repository)
 
         // When
         useCase(
             bookId = "OL123W",
-            rating = 4.5f
+            notes = "Livro muito interessante"
         )
 
         // Then
         Assert.assertEquals(
-            4.5f,
-            repository.lastUpdatedRating
+            "Livro muito interessante",
+            repository.lastUpdatedNotes
         )
     }
 
     @Test
-    fun `nao deve aceitar avaliacao maior que cinco`() = runTest {
+    fun `deve remover espacos extras da anotacao`() = runTest {
 
         // Given
         val repository = FakeBookRepository()
-        val useCase = UpdateRatingUseCase(repository)
+        val useCase = UpdateNotesUseCase(repository)
 
         // When
         useCase(
             bookId = "OL123W",
-            rating = 6f
+            notes = "   Minha anotacao   "
         )
 
         // Then
         Assert.assertEquals(
-            null,
-            repository.lastUpdatedRating
+            "Minha anotacao",
+            repository.lastUpdatedNotes
         )
     }
 }

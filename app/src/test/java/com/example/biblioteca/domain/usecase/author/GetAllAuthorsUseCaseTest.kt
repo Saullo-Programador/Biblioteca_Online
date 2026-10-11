@@ -1,14 +1,11 @@
 package com.example.biblioteca.domain.usecase.author
 
 import com.example.biblioteca.domain.model.Author
-import com.example.biblioteca.domain.repository.AuthorRepository
 import com.example.biblioteca.fake.FakeAuthorRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
-import javax.inject.Inject
 
 class GetAllAuthorsUseCaseTest {
     @Test

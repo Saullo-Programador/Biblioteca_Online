@@ -1,6 +1,5 @@
-package com.example.biblioteca.domain.usecase
+package com.example.biblioteca.domain.usecase.book
 
-import com.example.biblioteca.domain.usecase.book.UpdateReadingProgressUseCase
 import com.example.biblioteca.fake.FakeBookRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
