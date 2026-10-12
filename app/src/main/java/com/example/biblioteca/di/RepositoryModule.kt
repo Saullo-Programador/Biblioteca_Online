@@ -1,6 +1,8 @@
 package com.example.biblioteca.di
 
+import com.example.biblioteca.data.repository.AuthorRepositoryImpl
 import com.example.biblioteca.data.repository.BookRepositoryImpl
+import com.example.biblioteca.domain.repository.AuthorRepository
 import com.example.biblioteca.domain.repository.BookRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindBookRepository(
         repository: BookRepositoryImpl
     ): BookRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthorRepository(
+        repository: AuthorRepositoryImpl
+    ): AuthorRepository
 }
