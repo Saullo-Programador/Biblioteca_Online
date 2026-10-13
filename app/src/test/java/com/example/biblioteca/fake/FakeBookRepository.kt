@@ -5,6 +5,7 @@ import com.example.biblioteca.domain.model.BookDetails
 import com.example.biblioteca.domain.model.LibraryBook
 import com.example.biblioteca.domain.model.ReadingStatus
 import com.example.biblioteca.domain.repository.BookRepository
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -15,6 +16,8 @@ class FakeBookRepository : BookRepository {
 
     var searchResult: Result<List<Book>> =
         Result.success(emptyList())
+
+    var bookDetailsGate: CompletableDeferred<Unit>? = null
 
     var bookDetailsResult: Result<BookDetails> =
         Result.failure(
@@ -44,6 +47,7 @@ class FakeBookRepository : BookRepository {
     override suspend fun getBookDetails(
         bookId: String
     ): Result<BookDetails> {
+        bookDetailsGate?.await()
         return bookDetailsResult
     }
 
